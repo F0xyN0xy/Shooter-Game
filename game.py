@@ -23,7 +23,7 @@ pygame.draw.polygon(player_image, (255, 0, 0), [(0, 0), (50, 15), (0, 30)])
 
 # Player
 player_pos = pygame.Vector2(WIDTH // 2, HEIGHT // 2)
-player_speed = 5
+player_speed = 7
 player_health = 100
 max_health = 100
 
@@ -35,7 +35,7 @@ bullets_speed = 10
 enemies = []
 enemy_spawn_timer = 0
 enemy_spawn_interval = 1500  # milliseconds
-enemy_speed = 2
+enemy_speed = 5
 
 # Score
 score = 0
@@ -231,7 +231,7 @@ while running:
             
             # Check collision with player
             if check_collision(player_pos, 25, enemy["pos"], enemy["radius"]):
-                player_health -= 1
+                player_health -= 10
                 enemies.remove(enemy)
             elif enemy["health"] > 0:
                 new_enemies.append(enemy)

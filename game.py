@@ -4,6 +4,18 @@ import math
 import random
 
 pygame.init()
+pygame.mixer.init()
+
+# Sounds
+pygame.mixer.music.load("sounds/background_music.wav")
+pygame.mixer.music.set_volume(0.5)
+pygame.mixer.music.play(-1)
+shoot_sound = pygame.mixer.Sound("sounds/shooting_effect.mp3")
+shoot_sound.set_volume(0.3)
+tap_sound = pygame.mixer.Sound("sounds/tap_effect.mp3")
+tap_sound.set_volume(0.2)
+hit_sound = pygame.mixer.Sound("sounds/hit_effect.wav")
+hit_sound.set_volume(0.3)
 
 # Window
 WIDTH, HEIGHT = 800, 600
@@ -131,6 +143,7 @@ while running:
         elif game_state == "playing":
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 mouse_x, mouse_y = mouse_pos
+                shoot_sound.play()
                 
                 direction = pygame.Vector2(mouse_x - player_pos.x, mouse_y - player_pos.y).normalize()
 
@@ -204,6 +217,7 @@ while running:
             if 0 <= bullet["pos"].x <= WIDTH and 0 <= bullet["pos"].y <= HEIGHT:
                 new_bullets.append(bullet)
         bullets = new_bullets
+        
 
         # Update Enemies
         new_enemies = []
@@ -221,6 +235,7 @@ while running:
                 if check_collision(bullet["pos"], 6, enemy["pos"], enemy["radius"]):
                     enemy["health"] -= 1
                     hit = True
+                    tap_sound.play()
                     if enemy["health"] <= 0:
                         score += 10
                 else:
@@ -233,6 +248,7 @@ while running:
             if check_collision(player_pos, 25, enemy["pos"], enemy["radius"]):
                 player_health -= 10
                 enemies.remove(enemy)
+                hit_sound.play()
             elif enemy["health"] > 0:
                 new_enemies.append(enemy)
         

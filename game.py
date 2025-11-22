@@ -16,6 +16,9 @@ tap_sound = pygame.mixer.Sound("sounds/tap_effect.mp3")
 tap_sound.set_volume(0.2)
 hit_sound = pygame.mixer.Sound("sounds/hit_effect.wav")
 hit_sound.set_volume(0.3)
+win_sound = pygame.mixer.Sound("sounds/win_effect.wav")
+win_sound.set_volume(0.5)
+win_sound_played = False
 
 # Window
 WIDTH, HEIGHT = 800, 600
@@ -302,6 +305,11 @@ while running:
         
         if victory:
             end_text = large_font.render("VICTORY!", True, (0, 255, 0))
+            
+            if not win_sound_played:
+                win_sound_played = True
+                win_sound.play(0)
+
         else:
             end_text = large_font.render("GAME OVER", True, (255, 0, 0))
         

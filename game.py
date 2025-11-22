@@ -19,6 +19,9 @@ hit_sound.set_volume(0.3)
 win_sound = pygame.mixer.Sound("sounds/win_effect.wav")
 win_sound.set_volume(0.5)
 win_sound_played = False
+game_over_sound = pygame.mixer.Sound("sounds/game_over_effect.wav")
+game_over_sound.set_volume(0.5)
+game_over_sound_played = False
 
 # Window
 WIDTH, HEIGHT = 800, 600
@@ -312,6 +315,13 @@ while running:
 
         else:
             end_text = large_font.render("GAME OVER", True, (255, 0, 0))
+            
+            if not game_over_sound_played:
+                pygame.mixer.music.set_volume(0)
+                game_over_sound_played = True
+                game_over_sound.play(0)
+                delay = pygame.time.delay(1000)
+                pygame.mixer.music.set_volume(0.5)
         
         end_rect = end_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 80))
         screen.blit(end_text, end_rect)
